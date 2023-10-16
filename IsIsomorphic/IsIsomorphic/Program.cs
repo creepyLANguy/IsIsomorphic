@@ -22,7 +22,5 @@ string GetDistribution(string s)
     .Select(group => group.Count())
     .OrderBy(count => count);
   
-  var id = string.Join(".", orderedBuckets);
-
-  return id;
+  return string.Join(".", orderedBuckets);
 }
