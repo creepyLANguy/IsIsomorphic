@@ -1,4 +1,6 @@
-﻿var tests = new List<Tuple<string, string>>()
+﻿using System.Text;
+
+var tests = new List<Tuple<string, string>>()
 {
   new("abb", "cdd"),
   new("cassidy", "1234567"),
@@ -7,6 +9,7 @@
   new("tests", "21123"),
   new("abcc", "acbc"),
   new("aaabbbba", "bbbaaaba"),
+  new("askljdfhpiouertynm,bxcvzxc234668678967", "askljdfhpiouertynm,bxcvzxc234668678967"),
 };
 
 foreach (var test in tests)
@@ -17,18 +20,22 @@ foreach (var test in tests)
 bool IsIsomorphic(string s, string t) 
   => s.Length == t.Length && GetFingerprint(s) == GetFingerprint(t);
 
-int GetFingerprint(string input)
+string GetFingerprint(string input)
 {
-  var relations = new Dictionary<char, int>();
+  var relations = new Dictionary<char, char>();
   
-  var i = 0;
-  var fingerprint = 0;
+  var i = '0';
+  var fingerprint = new StringBuilder();
 
   foreach (var character in input)
   {
-    relations.TryAdd(character, ++i);
-    fingerprint = fingerprint * 10 + relations[character];
+    if (relations.TryAdd(character, i))
+    {
+      ++i;
+    }
+
+    fingerprint.Append(relations[character]);
   }
 
-  return fingerprint;
+  return fingerprint.ToString();
 }
