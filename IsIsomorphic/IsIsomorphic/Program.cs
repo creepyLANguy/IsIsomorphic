@@ -15,9 +15,9 @@ foreach (var test in tests)
 }
 
 bool IsIsomorphic(string s, string t) 
-  => s.Length == t.Length && GetDistribution(s) == GetDistribution(t);
+  => s.Length == t.Length && GetFingerprint(s) == GetFingerprint(t);
 
-int GetDistribution(string input)
+int GetFingerprint(string input)
 {
   var relations = new Dictionary<char, int>();
   
