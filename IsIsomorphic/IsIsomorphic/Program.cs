@@ -4,7 +4,9 @@
   new("cassidy", "1234567"),
   new("cass", "1233"),
   new("test", "999"),
-  new("tests", "21123")
+  new("tests", "21123"),
+  new("abcc", "acbc"),
+  new("aaabbbba", "bbbaaaba"),
 };
 
 foreach (var test in tests)
@@ -15,12 +17,18 @@ foreach (var test in tests)
 bool IsIsomorphic(string s, string t) 
   => s.Length == t.Length && GetDistribution(s) == GetDistribution(t);
 
-string GetDistribution(string s)
+int GetDistribution(string input)
 {
-  var orderedBuckets = s
-    .GroupBy(c => c)
-    .Select(group => group.Count())
-    .OrderBy(count => count);
+  var relations = new Dictionary<char, int>();
   
-  return string.Join(".", orderedBuckets);
+  var i = 0;
+  var fingerprint = 0;
+
+  foreach (var character in input)
+  {
+    relations.TryAdd(character, ++i);
+    fingerprint = fingerprint * 10 + relations[character];
+  }
+
+  return fingerprint;
 }
